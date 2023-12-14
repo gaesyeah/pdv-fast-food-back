@@ -73,8 +73,9 @@ model FoodCategory {
 model Food {
   id             Int          @id @default(autoincrement())
   code           String
-  price          Decimal
   name           String
+  price          Decimal
+  description    String
   foodCategoryId Int
   FoodCategory   FoodCategory @relation(fields: [foodCategoryId], references: [id])
   Extras         Extra[]
@@ -88,6 +89,8 @@ model Extra {
   foodId          Int
   Food            Food              @relation(fields: [foodId], references: [id])
   name            String
+  price           Decimal
+  description     String
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
   OrderFoodExtras OrderFoodExtras[]
