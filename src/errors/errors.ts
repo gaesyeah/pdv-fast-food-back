@@ -7,4 +7,11 @@ const unprocessableEntity = (resource: string = 'Unprocessable Entity') => {
   };
 };
 
-export const error = { unprocessableEntity };
+const badRequest = (resource: string = 'Bad Request') => {
+  return {
+    status: httpStatus.BAD_REQUEST,
+    message: resource,
+  };
+};
+
+export const error = { unprocessableEntity, badRequest };
