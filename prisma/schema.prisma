@@ -20,6 +20,7 @@ model PaymentType {
 
 model Order {
   id            Int         @id @default(autoincrement())
+  status        OrderStatus
   code          Int
   customerName  String
   observation   String?
@@ -31,6 +32,13 @@ model Order {
   Foods         FoodOrder[]
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
+}
+
+enum OrderStatus {
+  PREPARING
+  FINISHED
+  DELIVERED
+  CANCELED
 }
 
 model FoodOrder {
