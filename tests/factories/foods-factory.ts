@@ -8,26 +8,14 @@ export const createFoodCategory = (name: string = faker.lorem.word()) => {
   });
 };
 
-export const createFoods = (
-  foodCategoryId: number,
-  code: string = uuidv4(),
-) => {
-  return prisma.food.createMany({
-    data: [
-      {
-        code,
-        description: faker.lorem.paragraph(),
-        name: faker.lorem.word(),
-        price: faker.number.float({ min: 10, max: 50 }),
-        foodCategoryId,
-      },
-      {
-        code: uuidv4(),
-        description: faker.lorem.paragraph(),
-        name: faker.lorem.word(),
-        price: faker.number.float({ min: 10, max: 50 }),
-        foodCategoryId,
-      },
-    ],
+export const createFood = (foodCategoryId: number, code: string = uuidv4()) => {
+  return prisma.food.create({
+    data: {
+      code,
+      description: faker.lorem.paragraph(),
+      name: faker.lorem.word(),
+      price: faker.number.float({ min: 10, max: 50 }),
+      foodCategoryId,
+    },
   });
 };
