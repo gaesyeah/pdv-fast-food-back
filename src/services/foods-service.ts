@@ -3,7 +3,7 @@ import { invalidReqParam } from 'utils';
 import { foodsRepository } from '../repositories';
 
 const read = (identifier?: string) => {
-  if (!identifier) return foodsRepository.readByIdenfier(identifier);
+  if (identifier) return foodsRepository.readByIdenfier(identifier);
   return foodsRepository.read();
 };
 
