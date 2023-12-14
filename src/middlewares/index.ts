@@ -1,2 +1,2 @@
-export * from './errorHandlingMiddleware';
-export * from './schemaValidationMiddleware';
+export * from './errorHandling-middleware';
+export * from './schemaValidation-middleware';

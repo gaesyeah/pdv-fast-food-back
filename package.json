@@ -21,13 +21,13 @@
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
     "@commitlint/config-conventional": "^18.4.3",
-    "@faker-js/faker": "^8.3.1",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/faker": "^6.6.9",
     "@types/jest": "^29.5.11",
     "@types/node": "^20.10.4",
     "@types/supertest": "^2.0.16",
+    "@types/uuid": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
     "@typescript-eslint/parser": "^6.14.0",
     "cross-env": "^7.0.3",
@@ -44,12 +44,12 @@
     "nodemon": "^3.0.2",
     "prettier": "^3.1.1",
     "prisma": "^5.7.0",
-    "supertest": "^6.3.3",
     "ts-jest": "^29.1.1",
     "tsx": "^4.6.2",
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@faker-js/faker": "^8.3.1",
     "@prisma/client": "5.7.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
@@ -57,6 +57,8 @@
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
     "http-status": "^1.7.3",
-    "joi": "^17.11.0"
+    "joi": "^17.11.0",
+    "supertest": "^6.3.3",
+    "uuid": "^9.0.1"
   }
 }
