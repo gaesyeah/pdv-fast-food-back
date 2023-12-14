@@ -9,7 +9,7 @@
     "start": "npm run migration:prod && node ./dist/server.js",
     "dev": "cross-env NODE_ENV=development nodemon --watch 'src/' --exec 'npx tsx ./src/server.ts' -e ts",
     "test": "cross-env NODE_ENV=test jest --passWithNoTests --runInBand",
-    "test:load-envs": "./node_modules/dotenv/lib/cli.js -e .env.test.local",
+    "test:load-envs": "dotenv -e .env.test.local",
     "dev:load-envs": "dotenv -e .env.development.local",
     "dev:migration:generate": "npm run dev:load-envs prisma migrate dev",
     "test:migration:generate": "npm run test:load-envs prisma migrate dev",
