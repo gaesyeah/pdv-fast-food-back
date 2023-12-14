@@ -16,12 +16,14 @@ export const createFoods = (
     data: [
       {
         code,
+        description: faker.lorem.paragraph(),
         name: faker.lorem.word(),
         price: faker.number.float({ min: 10, max: 50 }),
         foodCategoryId,
       },
       {
         code: uuidv4(),
+        description: faker.lorem.paragraph(),
         name: faker.lorem.word(),
         price: faker.number.float({ min: 10, max: 50 }),
         foodCategoryId,
