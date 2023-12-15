@@ -4,7 +4,7 @@ import { prisma } from '../../src/config';
 
 export const createFoodCategory = (name: string = faker.lorem.word()) => {
   return prisma.foodCategory.create({
-    data: { name },
+    data: { name, frontBackGroundUrl: faker.internet.url() },
   });
 };
 
