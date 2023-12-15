@@ -1,7 +1,7 @@
 import supertest from 'supertest';
 import httpStatus from 'http-status';
 import { v4 as uuidv4 } from 'uuid';
-import { number } from 'joi';
+import { convertDateToISOstring, convertDecimalToString } from 'utils';
 import { cleanDb } from '../helpers';
 import app, { init } from '../../src/app';
 import { createFoodCategory, createFood } from '../factories';
@@ -21,25 +21,37 @@ describe('GET /foods', () => {
     const food = await createFood(id);
     const { status, body } = await server.get('/foods');
     expect(status).toBe(httpStatus.OK);
-    expect(body).toEqual([food]);
+    expect(body).toEqual([
+      {
+        ...food,
+        ...convertDecimalToString(food),
+        ...convertDateToISOstring(food),
+      },
+    ]);
   });
 
   it('should respond with status 200 and a array of foods based on the option param', async () => {
     const { id } = await createFoodCategory();
     const code = uuidv4();
-    await createFood(id);
-    await createFood(id);
-    const food = await createFood(id, code);
-    const { status, body } = await server.get(`/foods?identifier=${code}`);
+    const wrongFood = await createFood(id);
+    const rightFood = await createFood(id, code);
+
+    const { body, status } = await server.get(`/foods?identifier=${code}`);
     expect(status).toBe(httpStatus.OK);
-    expect(body).toEqual(
+    expect(body).not.toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          code,
+          code: wrongFood.code,
         }),
       ]),
     );
-    expect(body[2].code === food.code);
+    expect(body).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          code: rightFood.code,
+        }),
+      ]),
+    );
   });
 });
 
@@ -48,18 +60,17 @@ describe('GET /foods/:categoryId', () => {
     const category = await createFoodCategory();
     const { id } = category;
     const food = await createFood(id);
+
     const { status, body } = await server.get(`/foods/${id}`);
     expect(status).toBe(httpStatus.OK);
     expect(body).toEqual({
       ...category,
-      createdAt: category.createdAt.toISOString(),
-      updatedAt: category.updatedAt.toISOString(),
+      ...convertDateToISOstring(category),
       Foods: [
         {
           ...food,
-          price: Number(food.price).toString(),
-          createdAt: food.createdAt.toISOString(),
-          updatedAt: food.updatedAt.toISOString(),
+          ...convertDecimalToString(food),
+          ...convertDateToISOstring(food),
         },
       ],
     });
