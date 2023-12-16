@@ -7,9 +7,14 @@ const read = (identifier?: string) => {
   return foodsRepository.read();
 };
 
-const readByCategoryId = (categoryId: number) => {
+const readByCategoryId = async (categoryId: number) => {
   if (invalidReqParam(categoryId)) throw error.badRequest();
-  return foodsRepository.readByCategoryId(categoryId);
+
+  const food = await foodsRepository.readByCategoryId(categoryId);
+
+  if (!food) throw error.notFound('food not found');
+
+  return food;
 };
 
 export const foodsService = { read, readByCategoryId };
