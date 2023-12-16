@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { prisma } from 'config';
 
-export const createExtras = (foodId: number) => {
+export const createExtra = (foodId: number) => {
   return prisma.extra.create({
     data: {
       foodId,

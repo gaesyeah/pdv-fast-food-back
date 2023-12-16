@@ -5,7 +5,7 @@ import { convertDateToISOstring } from 'utils';
 import { cleanDb, orderDefaultBody } from '../helpers';
 import app, { init } from '../../src/app';
 import {
-  createExtras,
+  createExtra,
   createFood,
   createFoodCategory,
   createOrder,
@@ -27,7 +27,7 @@ const createDefaultOrderAmbient = async (): Promise<OrderStateType> => {
   const foodCategory = await createFoodCategory();
   const food = await createFood(foodCategory.id);
   const paymentType = await createPaymentType();
-  const extra = await createExtras(food.id);
+  const extra = await createExtra(food.id);
   return { foodId: food.id, paymentTypeId: paymentType.id, extraId: extra.id };
 };
 
