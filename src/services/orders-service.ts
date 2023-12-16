@@ -9,6 +9,7 @@ const read = () => {
 
 const create = async (body: OrderInput) => {
   const payment = await paymentRepository.readById(body.paymentTypeId);
+
   if (!payment) throw error.notFound('paymentTypeId not found');
 
   return ordersRepository.create(body);
@@ -24,6 +25,7 @@ const finish = async (orderId: number) => {
   if (order.status !== 'PREPARING') {
     throw error.forbidden('this order isnt being prepared');
   }
+
   return ordersRepository.updateById(orderId, 'FINISHED');
 };
 
@@ -37,6 +39,7 @@ const deliver = async (orderId: number) => {
   if (order.status !== 'FINISHED') {
     throw error.forbidden('this order cannot be delivered');
   }
+
   return ordersRepository.updateById(orderId, 'DELIVERED');
 };
 
@@ -50,6 +53,7 @@ const cancel = async (orderId: number) => {
   if (order.status === 'CANCELED' || order.status === 'DELIVERED') {
     throw error.forbidden('this order cannot be canceled');
   }
+
   return ordersRepository.updateById(orderId, 'CANCELED');
 };
 
