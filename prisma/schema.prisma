@@ -27,8 +27,7 @@ enum OrderStatus {
 
 model Order {
   id            Int         @id @default(autoincrement())
-  status        OrderStatus
-  code          Int         @unique
+  status        OrderStatus @default(PREPARING)
   customerName  String
   observation   String?
   //change é nulo quando não há troco

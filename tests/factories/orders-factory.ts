@@ -1,15 +1,9 @@
 import { prisma } from 'config';
 import { faker } from '@faker-js/faker';
-import { Extra, FoodOrder, Order, OrderFoodExtras } from '@prisma/client';
+import { FoodOrder, Order, OrderFoodExtras } from '@prisma/client';
+import { OrderInput } from '../../protocols';
 
-type Foods = {
-  id: number;
-  quantity: number;
-  extras: Pick<Extra, 'id'>[];
-}[];
-type TransactionOrderInput = { foods: Foods; paymentTypeId: number };
-
-type TransctionOrderOutput = {
+type TransactionOrderOutput = {
   result: unknown;
   data: {
     order: Order;
@@ -21,22 +15,20 @@ type TransctionOrderOutput = {
 export const createOrder = async ({
   paymentTypeId,
   foods,
-}: TransactionOrderInput): Promise<TransctionOrderOutput | null> => {
+}: OrderInput): Promise<TransactionOrderOutput | null> => {
   try {
     const result = prisma.$transaction(async prismaT => {
       /* create the order */
       const order = await prismaT.order.create({
         data: {
-          code: faker.number.int({ max: 999, min: 1 }),
           customerName: faker.person.firstName(),
-          status: 'PREPARING',
           paymentTypeId,
         },
       });
 
       /* assemble a SQL INSERT string with the values related to the food */
       const foodOrdersValues = foods
-        .map(({ id, quantity }) => `(${quantity}, ${id}, ${order.id})`)
+        .map(({ foodId, quantity }) => `(${quantity}, ${foodId}, ${order.id})`)
         .join(', ');
       /* use the INSERT SQL string to create the relation between the recently created order and the foods */
       const foodOrders = await prismaT.$queryRaw<FoodOrder[]>`
@@ -50,7 +42,9 @@ export const createOrder = async ({
       /* assemble a SQL INSERT string with the values related to the relation between the order and your foods */
       const orderFoodExtrasValues = foodOrders
         .flatMap(({ foodId, orderId }) => {
-          const extrasFromFoodId = foods.find(({ id }) => foodId === id).extras;
+          const extrasFromFoodId = foods.find(
+            ({ foodId: id }) => foodId === id,
+          ).extras;
           return extrasFromFoodId.map(extra => `(${orderId}, ${extra.id})`);
         })
         .join(', ');
