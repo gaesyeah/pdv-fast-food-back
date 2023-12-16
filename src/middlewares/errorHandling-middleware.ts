@@ -16,10 +16,8 @@ export const errorHandling = (
   const { message, status, detail } = error;
 
   if (status) {
-    res.status(status).send({ message: detail || message });
+    res.status(status).send({ message, detail });
   } else {
-    res
-      .status(httpStatus.INTERNAL_SERVER_ERROR)
-      .send({ message: detail || message });
+    res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ message, detail });
   }
 };

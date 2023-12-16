@@ -28,10 +28,10 @@ enum OrderStatus {
 model Order {
   id            Int         @id @default(autoincrement())
   status        OrderStatus @default(PREPARING)
+  code          Int         @default(autoincrement())
   customerName  String
   observation   String?
-  //change é nulo quando não há troco
-  change        Decimal?
+  paidValue     Float
   paymentTypeId Int
   PaymentType   PaymentType @relation(fields: [paymentTypeId], references: [id])
   Foods         FoodOrder[]
@@ -74,7 +74,7 @@ model Food {
   id             Int          @id @default(autoincrement())
   code           String
   name           String
-  price          Decimal
+  price          Float
   description    String
   foodCategoryId Int
   FoodCategory   FoodCategory @relation(fields: [foodCategoryId], references: [id])
@@ -89,7 +89,7 @@ model Extra {
   foodId          Int
   Food            Food              @relation(fields: [foodId], references: [id])
   name            String
-  price           Decimal
+  price           Float
   description     String
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt

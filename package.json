@@ -13,6 +13,7 @@
     "dev:load-envs": "dotenv -e .env.development.local",
     "dev:migration:generate": "npm run dev:load-envs prisma migrate dev",
     "test:migration:generate": "npm run test:load-envs prisma migrate dev",
+    "dev:seed": "npm run dev:load-envs prisma db seed",
     "migration:prod": "prisma migrate deploy"
   },
   "keywords": [],

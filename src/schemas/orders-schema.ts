@@ -4,13 +4,15 @@ import { OrderInput } from '../../protocols';
 export const orderSchema = Joi.object<OrderInput>({
   customerName: Joi.string().required(),
   paymentTypeId: Joi.number().integer().positive().required(),
+  observation: Joi.string(),
+  paidValue: Joi.number().positive().required(),
   foods: Joi.array()
     .items(
       Joi.object({
         foodId: Joi.number().integer().positive().required(),
         quantity: Joi.number().integer().positive().required(),
         extras: Joi.array().items(
-          Joi.object({ id: Joi.number().integer().positive().required() }),
+          Joi.object({ extraId: Joi.number().integer().positive().required() }),
         ),
       }),
     )

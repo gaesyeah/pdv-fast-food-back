@@ -13,9 +13,3 @@ export const convertDateToISOstring = (date: DateFromDB) => {
     updatedAt: updatedAt.toISOString(),
   };
 };
-
-export const convertDecimalToString = (food: Food | Extra) => {
-  return {
-    price: Number(food.price).toString(),
-  };
-};

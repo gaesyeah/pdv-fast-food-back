@@ -1,7 +1,7 @@
 import supertest from 'supertest';
 import httpStatus from 'http-status';
 import { v4 as uuidv4 } from 'uuid';
-import { convertDateToISOstring, convertDecimalToString } from 'utils';
+import { convertDateToISOstring } from 'utils';
 import { cleanDb } from '../helpers';
 import app, { init } from '../../src/app';
 import { createFood, createFoodCategory } from '../factories';
@@ -25,7 +25,6 @@ describe('GET /foods', () => {
     expect(body).toEqual([
       {
         ...food,
-        ...convertDecimalToString(food),
         ...convertDateToISOstring(food),
       },
     ]);
@@ -70,7 +69,6 @@ describe('GET /foods/:categoryId', () => {
       Foods: [
         {
           ...food,
-          ...convertDecimalToString(food),
           ...convertDateToISOstring(food),
         },
       ],
