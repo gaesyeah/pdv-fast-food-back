@@ -18,10 +18,17 @@ model PaymentType {
   updatedAt DateTime @updatedAt
 }
 
+enum OrderStatus {
+  PREPARING
+  FINISHED
+  DELIVERED
+  CANCELED
+}
+
 model Order {
   id            Int         @id @default(autoincrement())
   status        OrderStatus
-  code          Int
+  code          Int         @unique
   customerName  String
   observation   String?
   //change é nulo quando não há troco
@@ -33,23 +40,16 @@ model Order {
   updatedAt     DateTime    @updatedAt
 }
 
-enum OrderStatus {
-  PREPARING
-  FINISHED
-  DELIVERED
-  CANCELED
-}
-
 model FoodOrder {
-  id              Int               @id @default(autoincrement())
-  quantity        Int
-  foodId          Int
-  Food            Food              @relation(fields: [foodId], references: [id])
-  orderId         Int
-  Order           Order             @relation(fields: [orderId], references: [id])
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  OrderFoodExtras OrderFoodExtras[]
+  id        Int               @id @default(autoincrement())
+  quantity  Int
+  foodId    Int
+  Food      Food              @relation(fields: [foodId], references: [id])
+  orderId   Int
+  Order     Order             @relation(fields: [orderId], references: [id])
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  Extras    OrderFoodExtras[]
 }
 
 model OrderFoodExtras {
