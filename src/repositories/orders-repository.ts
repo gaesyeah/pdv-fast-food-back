@@ -6,6 +6,8 @@ import {
   PrismaClient,
 } from '@prisma/client';
 import { prisma } from 'config';
+import { xssN } from 'utils';
+import xss from 'xss';
 import { OrderInput } from '../../protocols';
 
 const read = () => {
@@ -29,9 +31,14 @@ const createOrder = ({
   body: OrderInput;
 }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { foods, ...rest } = body;
+  const { customerName, paidValue, observation, paymentTypeId } = body;
   return prismaT.order.create({
-    data: { ...rest },
+    data: {
+      customerName: xss(customerName),
+      observation: observation ? xss(observation) : null,
+      paidValue: xssN(paidValue),
+      paymentTypeId: xssN(paymentTypeId),
+    },
   });
 };
 
@@ -47,7 +54,8 @@ const createFoodOrder = ({
   // assemble a SQL INSERT string with the values related to the food
   const foodOrdersValues = body.foods
     .map(
-      ({ foodId, quantity }) => `(${quantity}, ${foodId}, ${orderId}, NOW())`,
+      ({ foodId, quantity }) =>
+        `(${xssN(quantity)}, ${xssN(foodId)}, ${xssN(orderId)}, NOW())`,
     )
     .join(', ');
   // use the INSERT SQL string to create the relation between the recently created order and the foods
@@ -81,7 +89,7 @@ const createOrderFoodExtras = ({
       if (!extrasFromFoodId) return [];
 
       return extrasFromFoodId.map(
-        ({ extraId }) => `(${orderId}, ${extraId}, NOW())`,
+        ({ extraId }) => `(${xssN(orderId)}, ${xssN(extraId)}, NOW())`,
       );
     })
     .join(', ');
