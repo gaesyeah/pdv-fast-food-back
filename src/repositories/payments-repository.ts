@@ -8,4 +8,8 @@ const readById = (id: number) => {
   });
 };
 
-export const paymentRepository = { readById };
+const read = () => {
+  return prisma.paymentType.findMany();
+};
+
+export const paymentsRepository = { readById, read };
