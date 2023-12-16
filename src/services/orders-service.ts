@@ -1,6 +1,6 @@
 import { error } from 'errors';
 import { invalidReqParam } from 'utils';
-import { ordersRepository, paymentRepository } from '../repositories';
+import { ordersRepository, paymentsRepository } from '../repositories';
 import { OrderInput } from '../../protocols';
 
 const read = () => {
@@ -8,7 +8,7 @@ const read = () => {
 };
 
 const create = async (body: OrderInput) => {
-  const payment = await paymentRepository.readById(body.paymentTypeId);
+  const payment = await paymentsRepository.readById(body.paymentTypeId);
 
   if (!payment) throw error.notFound('paymentTypeId not found');
 
@@ -50,7 +50,8 @@ const cancel = async (orderId: number) => {
 
   if (!order) throw error.notFound('order not found');
 
-  if (order.status === 'CANCELED' || order.status === 'DELIVERED') {
+  const { status } = order;
+  if (status === 'CANCELED' || status === 'DELIVERED') {
     throw error.forbidden('this order cannot be canceled');
   }
 

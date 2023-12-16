@@ -2,7 +2,7 @@ import 'express-async-errors';
 import express, { Express } from 'express';
 import cors from 'cors';
 import { errorHandling } from 'middlewares';
-import { foodsRouter, ordersRouter } from 'routes';
+import { foodsRouter, ordersRouter, paymentsRouter } from 'routes';
 import { connectDb, disconnectDB, loadEnv } from './config';
 
 loadEnv();
@@ -13,6 +13,7 @@ app
   .get('/health', (_req, res) => res.send('OK!'))
   .use('/foods', foodsRouter)
   .use('/orders', ordersRouter)
+  .use('/payments', paymentsRouter)
   .use(errorHandling);
 
 export function init(): Promise<Express> {
