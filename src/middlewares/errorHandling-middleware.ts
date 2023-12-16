@@ -8,16 +8,16 @@ type Error = {
 };
 
 export const errorHandling = (
-  error: Error,
+  error: Error & { detail: string | null },
   _req: Request,
   res: Response,
   _next: NextFunction, // eslint-disable-line
 ) => {
-  const { message, status } = error;
+  const { message, status, detail } = error;
 
   if (status) {
-    res.status(status).send({ message });
+    res.status(status).send({ message, detail });
   } else {
-    res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ message });
+    res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ message, detail });
   }
 };

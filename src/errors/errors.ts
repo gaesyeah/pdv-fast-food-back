@@ -14,4 +14,31 @@ const badRequest = (resource: string = 'Bad Request') => {
   };
 };
 
-export const error = { unprocessableEntity, badRequest };
+const internalServer = (resource: string = 'Internal Server Error') => {
+  return {
+    status: httpStatus.INTERNAL_SERVER_ERROR,
+    message: resource,
+  };
+};
+
+const notFound = (resource: string = 'Not Found') => {
+  return {
+    status: httpStatus.NOT_FOUND,
+    message: resource,
+  };
+};
+
+const forbidden = (resource: string = 'Forbidden Error') => {
+  return {
+    status: httpStatus.FORBIDDEN,
+    message: resource,
+  };
+};
+
+export const error = {
+  unprocessableEntity,
+  badRequest,
+  internalServer,
+  notFound,
+  forbidden,
+};

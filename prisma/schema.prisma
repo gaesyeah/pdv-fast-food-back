@@ -18,22 +18,6 @@ model PaymentType {
   updatedAt DateTime @updatedAt
 }
 
-model Order {
-  id            Int         @id @default(autoincrement())
-  status        OrderStatus
-  code          Int
-  customerName  String
-  observation   String?
-  totalPrice    Decimal
-  //change é nulo quando não há troco
-  change        Decimal?
-  paymentTypeId Int
-  PaymentType   PaymentType @relation(fields: [paymentTypeId], references: [id])
-  Foods         FoodOrder[]
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-}
-
 enum OrderStatus {
   PREPARING
   FINISHED
@@ -41,15 +25,30 @@ enum OrderStatus {
   CANCELED
 }
 
+model Order {
+  id            Int         @id @default(autoincrement())
+  status        OrderStatus @default(PREPARING)
+  code          Int         @default(autoincrement())
+  customerName  String
+  observation   String?
+  paidValue     Float
+  paymentTypeId Int
+  PaymentType   PaymentType @relation(fields: [paymentTypeId], references: [id])
+  Foods         FoodOrder[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
 model FoodOrder {
-  id              Int               @id @default(autoincrement())
-  foodId          Int
-  Food            Food              @relation(fields: [foodId], references: [id])
-  orderId         Int
-  Order           Order             @relation(fields: [orderId], references: [id])
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  OrderFoodExtras OrderFoodExtras[]
+  id        Int               @id @default(autoincrement())
+  quantity  Int
+  foodId    Int
+  Food      Food              @relation(fields: [foodId], references: [id])
+  orderId   Int
+  Order     Order             @relation(fields: [orderId], references: [id])
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  Extras    OrderFoodExtras[]
 }
 
 model OrderFoodExtras {
@@ -63,18 +62,19 @@ model OrderFoodExtras {
 }
 
 model FoodCategory {
-  id        Int      @id @default(autoincrement())
-  name      String
-  Foods     Food[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                 Int      @id @default(autoincrement())
+  name               String
+  Foods              Food[]
+  frontBackGroundUrl String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }
 
 model Food {
   id             Int          @id @default(autoincrement())
   code           String
   name           String
-  price          Decimal
+  price          Float
   description    String
   foodCategoryId Int
   FoodCategory   FoodCategory @relation(fields: [foodCategoryId], references: [id])
@@ -89,7 +89,7 @@ model Extra {
   foodId          Int
   Food            Food              @relation(fields: [foodId], references: [id])
   name            String
-  price           Decimal
+  price           Float
   description     String
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt

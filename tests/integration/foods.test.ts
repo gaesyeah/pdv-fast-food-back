@@ -1,10 +1,10 @@
 import supertest from 'supertest';
 import httpStatus from 'http-status';
 import { v4 as uuidv4 } from 'uuid';
-import { convertDateToISOstring, convertDecimalToString } from 'utils';
+import { convertDateToISOstring } from 'utils';
 import { cleanDb } from '../helpers';
 import app, { init } from '../../src/app';
-import { createFoodCategory, createFood } from '../factories';
+import { createFood, createFoodCategory } from '../factories';
 
 beforeAll(async () => {
   await init();
@@ -19,12 +19,12 @@ describe('GET /foods', () => {
   it('should respond with status 200 and a array of foods when the optional param is not defined', async () => {
     const { id } = await createFoodCategory();
     const food = await createFood(id);
+
     const { status, body } = await server.get('/foods');
     expect(status).toBe(httpStatus.OK);
     expect(body).toEqual([
       {
         ...food,
-        ...convertDecimalToString(food),
         ...convertDateToISOstring(food),
       },
     ]);
@@ -69,7 +69,6 @@ describe('GET /foods/:categoryId', () => {
       Foods: [
         {
           ...food,
-          ...convertDecimalToString(food),
           ...convertDateToISOstring(food),
         },
       ],
@@ -81,7 +80,7 @@ describe('GET /foods/:categoryId', () => {
     expect(status).toBe(httpStatus.BAD_REQUEST);
   });
 
-  it('should respond with status 400 if the categoryId param is smaller not a number', async () => {
+  it('should respond with status 400 if the categoryId param is not a number', async () => {
     const { status } = await server.get(`/foods/${'aaaaa'}`);
     expect(status).toBe(httpStatus.BAD_REQUEST);
   });
