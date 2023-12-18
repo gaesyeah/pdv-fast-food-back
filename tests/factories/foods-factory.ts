@@ -6,6 +6,8 @@ export const createFood = (foodCategoryId: number, code: string = uuidv4()) => {
   return prisma.food.create({
     data: {
       code,
+      frontBackGroundUrl: faker.internet.url(),
+      imageUrl: faker.internet.url(),
       description: faker.lorem.paragraph(),
       name: faker.lorem.word(),
       price: faker.number.float({ min: 10, max: 50 }),
