@@ -5,7 +5,7 @@ const foodsRouter = Router();
 
 foodsRouter
   .get('/', foodsController.read)
-  .get('/:categoryId', foodsController.readByCategoryId)
+  .get('/category/:categoryId', foodsController.readByCategoryId)
   .get('/details/:foodId', foodsController.readByFoodId);
 
 export { foodsRouter };

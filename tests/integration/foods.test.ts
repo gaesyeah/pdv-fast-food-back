@@ -57,22 +57,22 @@ describe('GET /foods', () => {
 
 describe('GET /foods/:categoryId', () => {
   it('should respond with status 400 if the categoryId param is smaller than 1', async () => {
-    const { status } = await server.get(`/foods/${-100}`);
+    const { status } = await server.get(`/foods/category/${-100}`);
     expect(status).toBe(httpStatus.BAD_REQUEST);
   });
 
   it('should respond with status 400 if the categoryId param is not a number', async () => {
-    const { status } = await server.get(`/foods/${'aaaaa'}`);
+    const { status } = await server.get(`/foods/category/${'aaaaa'}`);
     expect(status).toBe(httpStatus.BAD_REQUEST);
   });
 
   it('should respond with status 400 if the categoryId param is undefined', async () => {
-    const { status } = await server.get(`/foods/${undefined}`);
+    const { status } = await server.get(`/foods/category/${undefined}`);
     expect(status).toBe(httpStatus.BAD_REQUEST);
   });
 
   it('should respond with status 404 if the category doesnt exist', async () => {
-    const { status } = await server.get(`/foods/${1}`);
+    const { status } = await server.get(`/foods/category/${1}`);
     expect(status).toBe(httpStatus.NOT_FOUND);
   });
 
@@ -81,7 +81,7 @@ describe('GET /foods/:categoryId', () => {
     const { id } = category;
     const food = await createFood(id);
 
-    const { status, body } = await server.get(`/foods/${id}`);
+    const { status, body } = await server.get(`/foods/category/${id}`);
     expect(status).toBe(httpStatus.OK);
     expect(body).toEqual({
       ...category,
