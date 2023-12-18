@@ -1,20 +1,20 @@
 import { error } from 'errors';
 import { invalidReqParam } from 'utils';
-import { foodsRepository } from '../repositories';
+import { foodCategoriesRepository, foodsRepository } from '../repositories';
 
 const read = (identifier?: string) => {
-  if (identifier) return foodsRepository.readByIdenfier(identifier);
+  if (identifier) return foodsRepository.readByIdentifier(identifier);
   return foodsRepository.read();
 };
 
 const readByCategoryId = async (categoryId: number) => {
   if (invalidReqParam(categoryId)) throw error.badRequest();
 
-  const category = await foodsRepository.readByCategoryId(categoryId);
+  const category = await foodCategoriesRepository.readById(categoryId);
 
   if (!category) throw error.notFound('category not found');
 
-  return category;
+  return foodsRepository.readByCategoryId(categoryId);
 };
 
 const readByFoodId = async (foodId: number) => {
