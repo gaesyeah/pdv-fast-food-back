@@ -12,15 +12,27 @@ const readByIdenfier = (identifier: string) => {
   });
 };
 
-const readByCategoryId = (categoryId: number) => {
+const readByCategoryId = (id: number) => {
   return prisma.foodCategory.findUnique({
-    where: {
-      id: categoryId,
-    },
+    where: { id },
     include: {
       Foods: true,
     },
   });
 };
 
-export const foodsRepository = { read, readByIdenfier, readByCategoryId };
+const readByFoodId = (id: number) => {
+  return prisma.food.findUnique({
+    where: { id },
+    include: {
+      Extras: true,
+    },
+  });
+};
+
+export const foodsRepository = {
+  read,
+  readByIdenfier,
+  readByCategoryId,
+  readByFoodId,
+};

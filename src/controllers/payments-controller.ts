@@ -6,4 +6,4 @@ const read = async (_req: Request, res: Response) => {
   res.send(payments);
 };
 
-export const paymentsControler = { read };
+export const paymentsController = { read };

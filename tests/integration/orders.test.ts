@@ -5,7 +5,7 @@ import { convertDateToISOstring } from 'utils';
 import { cleanDb, orderDefaultBody } from '../helpers';
 import app, { init } from '../../src/app';
 import {
-  createExtras,
+  createExtra,
   createFood,
   createFoodCategory,
   createOrder,
@@ -27,7 +27,7 @@ const createDefaultOrderAmbient = async (): Promise<OrderStateType> => {
   const foodCategory = await createFoodCategory();
   const food = await createFood(foodCategory.id);
   const paymentType = await createPaymentType();
-  const extra = await createExtras(food.id);
+  const extra = await createExtra(food.id);
   return { foodId: food.id, paymentTypeId: paymentType.id, extraId: extra.id };
 };
 
@@ -106,7 +106,7 @@ describe('GET /orders', () => {
   });
 });
 
-describe('patch /orders/finish/:orderId', () => {
+describe('PATCH /orders/finish/:orderId', () => {
   it('should respond with status 400 if the orderId param is smaller than 1', async () => {
     const { status } = await server.patch(`/orders/finish/${-100}`);
     expect(status).toBe(httpStatus.BAD_REQUEST);
@@ -157,7 +157,7 @@ describe('patch /orders/finish/:orderId', () => {
   });
 });
 
-describe('patch /orders/deliver/:orderId', () => {
+describe('PATCH /orders/deliver/:orderId', () => {
   it('should respond with status 400 if the orderId param is smaller than 1', async () => {
     const { status } = await server.patch(`/orders/deliver/${-100}`);
     expect(status).toBe(httpStatus.BAD_REQUEST);
@@ -208,7 +208,7 @@ describe('patch /orders/deliver/:orderId', () => {
   });
 });
 
-describe('patch /orders/cancel/:orderId', () => {
+describe('PATCH /orders/cancel/:orderId', () => {
   it('should respond with status 400 if the orderId param is smaller than 1', async () => {
     const { status } = await server.patch(`/orders/cancel/${-100}`);
     expect(status).toBe(httpStatus.BAD_REQUEST);
