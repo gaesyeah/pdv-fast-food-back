@@ -4,4 +4,10 @@ const read = () => {
   return prisma.foodCategory.findMany();
 };
 
-export const foodCategoriesRepository = { read };
+const readById = (id: number) => {
+  return prisma.foodCategory.findUnique({
+    where: { id },
+  });
+};
+
+export const foodCategoriesRepository = { read, readById };

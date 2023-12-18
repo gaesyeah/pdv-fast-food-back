@@ -83,16 +83,12 @@ describe('GET /foods/:categoryId', () => {
 
     const { status, body } = await server.get(`/foods/category/${id}`);
     expect(status).toBe(httpStatus.OK);
-    expect(body).toEqual({
-      ...category,
-      ...convertDateToISOstring(category),
-      Foods: [
-        {
-          ...food,
-          ...convertDateToISOstring(food),
-        },
-      ],
-    });
+    expect(body).toEqual([
+      {
+        ...food,
+        ...convertDateToISOstring(food),
+      },
+    ]);
   });
 });
 

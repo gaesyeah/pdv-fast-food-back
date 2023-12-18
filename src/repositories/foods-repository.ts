@@ -4,7 +4,7 @@ const read = () => {
   return prisma.food.findMany();
 };
 
-const readByIdenfier = (identifier: string) => {
+const readByIdentifier = (identifier: string) => {
   return prisma.food.findMany({
     where: {
       OR: [{ name: identifier }, { code: identifier }],
@@ -12,12 +12,9 @@ const readByIdenfier = (identifier: string) => {
   });
 };
 
-const readByCategoryId = (id: number) => {
-  return prisma.foodCategory.findUnique({
-    where: { id },
-    include: {
-      Foods: true,
-    },
+const readByCategoryId = (foodCategoryId: number) => {
+  return prisma.food.findMany({
+    where: { foodCategoryId },
   });
 };
 
@@ -32,7 +29,7 @@ const readByFoodId = (id: number) => {
 
 export const foodsRepository = {
   read,
-  readByIdenfier,
+  readByIdentifier,
   readByCategoryId,
   readByFoodId,
 };
