@@ -1,8 +1,8 @@
-import { paymentsControler } from 'controllers';
+import { paymentsController } from 'controllers';
 import { Router } from 'express';
 
 const paymentsRouter = Router();
 
-paymentsRouter.get('/', paymentsControler.read);
+paymentsRouter.get('/', paymentsController.read);
 
 export { paymentsRouter };

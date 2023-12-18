@@ -19,4 +19,4 @@ const readByFoodId = async (req: Request, res: Response) => {
   res.send(foodsWithExtras);
 };
 
-export const foodsControler = { read, readByCategoryId, readByFoodId };
+export const foodsController = { read, readByCategoryId, readByFoodId };

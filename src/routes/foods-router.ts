@@ -1,11 +1,11 @@
-import { foodsControler } from 'controllers';
+import { foodsController } from 'controllers';
 import { Router } from 'express';
 
 const foodsRouter = Router();
 
 foodsRouter
-  .get('/', foodsControler.read)
-  .get('/:categoryId', foodsControler.readByCategoryId)
-  .get('/details/:foodId', foodsControler.readByFoodId);
+  .get('/', foodsController.read)
+  .get('/:categoryId', foodsController.readByCategoryId)
+  .get('/details/:foodId', foodsController.readByFoodId);
 
 export { foodsRouter };
