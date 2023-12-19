@@ -8,8 +8,8 @@ const readByIdentifier = (identifier: string) => {
   return prisma.food.findMany({
     where: {
       OR: [
-        { name: { contains: identifier } },
-        { code: { contains: identifier } },
+        { name: { contains: identifier, mode: 'insensitive' } },
+        { code: { contains: identifier, mode: 'insensitive' } },
       ],
     },
   });
