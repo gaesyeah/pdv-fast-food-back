@@ -16,7 +16,7 @@ beforeEach(async () => {
 const server = supertest(app);
 
 describe('GET /foods', () => {
-  it('should respond with status 200 and a array of foods including your related Extras when the optional param is not defined', async () => {
+  it('should respond with status 200 and a array of foods including your related Extras (when the optional param is not defined)', async () => {
     const { id } = await createFoodCategory();
     const food = await createFood(id);
     const extra = await createExtra(food.id);

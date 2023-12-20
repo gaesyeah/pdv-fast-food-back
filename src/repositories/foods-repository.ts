@@ -16,6 +16,9 @@ const readByIdentifier = (identifier: string) => {
         { code: { contains: identifier, mode: 'insensitive' } },
       ],
     },
+    include: {
+      Extras: true,
+    },
   });
 };
 
