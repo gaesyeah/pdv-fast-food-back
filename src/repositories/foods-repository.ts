@@ -1,7 +1,11 @@
 import { prisma } from 'config';
 
 const read = () => {
-  return prisma.food.findMany();
+  return prisma.food.findMany({
+    include: {
+      Extras: true,
+    },
+  });
 };
 
 const readByIdentifier = (identifier: string) => {
@@ -11,6 +15,9 @@ const readByIdentifier = (identifier: string) => {
         { name: { contains: identifier, mode: 'insensitive' } },
         { code: { contains: identifier, mode: 'insensitive' } },
       ],
+    },
+    include: {
+      Extras: true,
     },
   });
 };

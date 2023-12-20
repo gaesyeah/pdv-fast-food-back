@@ -3,8 +3,8 @@ import { foodsService } from 'services';
 
 const read = async (req: Request, res: Response) => {
   const identifier = req.query.identifier as string;
-  const foods = await foodsService.read(identifier);
-  res.send(foods);
+  const foodsWithExtras = await foodsService.read(identifier);
+  res.send(foodsWithExtras);
 };
 
 const readByCategoryId = async (req: Request, res: Response) => {
