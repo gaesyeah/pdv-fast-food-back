@@ -25,6 +25,9 @@ const readByIdentifier = (identifier: string) => {
 const readByCategoryId = (foodCategoryId: number) => {
   return prisma.food.findMany({
     where: { foodCategoryId },
+    include: {
+      Extras: true,
+    },
   });
 };
 

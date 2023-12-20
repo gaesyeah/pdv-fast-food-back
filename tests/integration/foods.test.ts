@@ -78,10 +78,11 @@ describe('GET /foods/:categoryId', () => {
     expect(status).toBe(httpStatus.NOT_FOUND);
   });
 
-  it('should respond with status 200 and the category with a array of foods related to it', async () => {
+  it('should respond with status 200 and a array of foods related to the categoryId including your related Extras', async () => {
     const category = await createFoodCategory();
     const { id } = category;
     const food = await createFood(id);
+    const extra = await createExtra(food.id);
 
     const { status, body } = await server.get(`/foods/category/${id}`);
     expect(status).toBe(httpStatus.OK);
@@ -89,6 +90,7 @@ describe('GET /foods/:categoryId', () => {
       {
         ...food,
         ...convertDateToISOstring(food),
+        Extras: [{ ...extra, ...convertDateToISOstring(extra) }],
       },
     ]);
   });
