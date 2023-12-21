@@ -28,7 +28,6 @@ enum OrderStatus {
 model Order {
   id            Int         @id @default(autoincrement())
   status        OrderStatus @default(PREPARING)
-  code          Int         @default(autoincrement())
   customerName  String
   paidValue     Float
   paymentTypeId Int
