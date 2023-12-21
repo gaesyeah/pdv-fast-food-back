@@ -31,11 +31,10 @@ const createOrder = ({
   body: OrderInput;
 }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { customerName, paidValue, observation, paymentTypeId } = body;
+  const { customerName, paidValue, paymentTypeId } = body;
   return prismaT.order.create({
     data: {
       customerName: xss(customerName),
-      observation: observation ? xss(observation) : null,
       paidValue: xssN(paidValue),
       paymentTypeId: xssN(paymentTypeId),
     },
@@ -54,15 +53,17 @@ const createFoodOrder = ({
   // assemble a SQL INSERT string with the values related to the food
   const foodOrdersValues = body.foods
     .map(
-      ({ foodId, quantity }) =>
-        `(${xssN(quantity)}, ${xssN(foodId)}, ${xssN(orderId)}, NOW())`,
+      ({ foodId, quantity, observation }) =>
+        `(${xssN(quantity)}, ${
+          observation ? `'${xss(observation)}'` : `NULL`
+        }, ${xssN(foodId)}, ${xssN(orderId)}, NOW())`,
     )
     .join(', ');
   // use the INSERT SQL string to create the relation between the recently created order and the foods
   return prismaT.$queryRaw<FoodOrder[]>(
     Prisma.raw(`
       INSERT INTO
-        "FoodOrder" (quantity, "foodId", "orderId", "updatedAt")
+        "FoodOrder" (quantity, observation, "foodId", "orderId", "updatedAt")
       VALUES
         ${foodOrdersValues}
       RETURNING *

@@ -28,9 +28,7 @@ enum OrderStatus {
 model Order {
   id            Int         @id @default(autoincrement())
   status        OrderStatus @default(PREPARING)
-  code          Int         @default(autoincrement())
   customerName  String
-  observation   String?
   paidValue     Float
   paymentTypeId Int
   PaymentType   PaymentType @relation(fields: [paymentTypeId], references: [id])
@@ -40,15 +38,16 @@ model Order {
 }
 
 model FoodOrder {
-  id        Int               @id @default(autoincrement())
-  quantity  Int
-  foodId    Int
-  Food      Food              @relation(fields: [foodId], references: [id])
-  orderId   Int
-  Order     Order             @relation(fields: [orderId], references: [id])
-  createdAt DateTime          @default(now())
-  updatedAt DateTime          @updatedAt
-  Extras    OrderFoodExtras[]
+  id          Int               @id @default(autoincrement())
+  quantity    Int
+  observation String?
+  foodId      Int
+  Food        Food              @relation(fields: [foodId], references: [id])
+  orderId     Int
+  Order       Order             @relation(fields: [orderId], references: [id])
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  Extras      OrderFoodExtras[]
 }
 
 model OrderFoodExtras {
