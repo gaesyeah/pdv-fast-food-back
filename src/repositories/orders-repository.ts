@@ -16,13 +16,12 @@ const read = () => {
       PaymentType: true,
       Foods: {
         include: {
-          Food: {
-            select: {
-              imageUrl: true,
-              name: true,
+          Food: true,
+          Extras: {
+            include: {
+              Extra: true,
             },
           },
-          Extras: true,
         },
       },
     },
@@ -91,7 +90,7 @@ const createOrderFoodExtras = ({
 }) => {
   // assemble a SQL INSERT string with the values related to the relation between the order and your foods extras
   const orderFoodExtrasValues = foodOrders
-    .flatMap(({ foodId, orderId }) => {
+    .flatMap(({ foodId, id: foodOrderId }) => {
       const extrasFromFoodId = body.foods.find(
         ({ foodId: id }) => foodId === id,
       ).extras;
@@ -99,7 +98,7 @@ const createOrderFoodExtras = ({
       if (!extrasFromFoodId) return [];
 
       return extrasFromFoodId.map(
-        ({ extraId }) => `(${xssN(orderId)}, ${xssN(extraId)}, NOW())`,
+        ({ extraId }) => `(${xssN(foodOrderId)}, ${xssN(extraId)}, NOW())`,
       );
     })
     .join(', ');
