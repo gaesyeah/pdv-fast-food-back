@@ -26,6 +26,9 @@ const read = () => {
         },
       },
     },
+    orderBy: {
+      updatedAt: 'desc',
+    },
   });
 };
 
