@@ -22,7 +22,11 @@ const read = () => {
               name: true,
             },
           },
-          Extras: true,
+          Extras: {
+            include: {
+              Extra: true,
+            },
+          },
         },
       },
     },

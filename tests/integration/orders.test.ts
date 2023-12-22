@@ -102,7 +102,9 @@ describe('GET /orders', () => {
         Foods: expect.arrayContaining([
           expect.objectContaining({
             Food: expect.objectContaining({}),
-            Extras: expect.arrayContaining([]),
+            Extras: expect.arrayContaining([
+              expect.objectContaining({ Extra: expect.objectContaining({}) }),
+            ]),
           }),
         ]),
         ...convertDateToISOstring(order),
