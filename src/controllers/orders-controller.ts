@@ -10,8 +10,8 @@ const read = async (_req: Request, res: Response) => {
 
 const create = async (req: Request, res: Response) => {
   const body = req.body as OrderInput;
-  await ordersService.create(body);
-  res.sendStatus(httpStatus.CREATED);
+  const { order } = await ordersService.create(body);
+  res.status(httpStatus.CREATED).send(order);
 };
 
 const finish = async (req: Request, res: Response) => {

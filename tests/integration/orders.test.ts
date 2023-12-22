@@ -99,7 +99,12 @@ describe('GET /orders', () => {
       {
         ...order,
         PaymentType: expect.objectContaining({ name: expect.any(String) }),
-        Foods: expect.arrayContaining([]),
+        Foods: expect.arrayContaining([
+          expect.objectContaining({
+            Food: expect.objectContaining({}),
+            Extras: expect.arrayContaining([]),
+          }),
+        ]),
         ...convertDateToISOstring(order),
       },
     ]);

@@ -16,9 +16,18 @@ const read = () => {
       PaymentType: true,
       Foods: {
         include: {
+          Food: {
+            select: {
+              imageUrl: true,
+              name: true,
+            },
+          },
           Extras: true,
         },
       },
+    },
+    orderBy: {
+      updatedAt: 'desc',
     },
   });
 };
