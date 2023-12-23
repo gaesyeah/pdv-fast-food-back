@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
+import { OrderInput } from 'protocols';
 import { ordersService } from 'services';
-import { OrderInput } from '../../protocols';
 
 const read = async (_req: Request, res: Response) => {
   const orders = await ordersService.read();

@@ -1,8 +1,8 @@
 import supertest from 'supertest';
 import httpStatus from 'http-status';
 import { OrderStatus } from '@prisma/client';
-import { convertDateToISOstring } from 'utils';
-import { cleanDb, orderDefaultBody } from '../helpers';
+import { OrderStateType } from 'protocols';
+import { convertDateToISOstring, cleanDb, orderDefaultBody } from '../helpers';
 import app, { init } from '../../src/app';
 import {
   createExtra,
@@ -12,7 +12,6 @@ import {
   createPaymentType,
   updateOrder,
 } from '../factories';
-import { OrderStateType } from '../../protocols';
 
 beforeAll(async () => {
   await init();

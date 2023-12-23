@@ -1,7 +1,7 @@
 import { OrderStatus } from '@prisma/client';
 import { prisma } from 'config';
 import { ordersRepository } from 'repositories';
-import { OrderStateType } from '../../protocols';
+import { OrderStateType } from 'protocols';
 import { orderDefaultBody } from '../helpers';
 
 export const createOrder = ({

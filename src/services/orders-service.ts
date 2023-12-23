@@ -1,7 +1,7 @@
 import { error } from 'errors';
 import { invalidReqParam } from 'utils';
+import { OrderInput } from 'protocols';
 import { ordersRepository, paymentsRepository } from '../repositories';
-import { OrderInput } from '../../protocols';
 
 const read = () => {
   return ordersRepository.read();

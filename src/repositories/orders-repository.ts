@@ -6,9 +6,9 @@ import {
   PrismaClient,
 } from '@prisma/client';
 import { prisma } from 'config';
+import { OrderInput } from 'protocols';
 import { xssN } from 'utils';
 import xss from 'xss';
-import { OrderInput } from '../../protocols';
 
 const read = () => {
   return prisma.order.findMany({

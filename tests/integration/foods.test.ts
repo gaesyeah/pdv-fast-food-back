@@ -1,8 +1,7 @@
 import supertest from 'supertest';
 import httpStatus from 'http-status';
 import { v4 as uuidv4 } from 'uuid';
-import { convertDateToISOstring } from 'utils';
-import { cleanDb } from '../helpers';
+import { convertDateToISOstring, cleanDb } from '../helpers';
 import app, { init } from '../../src/app';
 import { createExtra, createFood, createFoodCategory } from '../factories';
 

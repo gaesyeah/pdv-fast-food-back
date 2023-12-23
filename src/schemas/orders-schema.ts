@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { OrderInput } from '../../protocols';
+import { OrderInput } from 'protocols';
 
 export const orderSchema = Joi.object<OrderInput>({
   customerName: Joi.string().required(),

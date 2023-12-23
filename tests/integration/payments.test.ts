@@ -1,7 +1,6 @@
 import supertest from 'supertest';
 import httpStatus from 'http-status';
-import { convertDateToISOstring } from 'utils';
-import { cleanDb } from '../helpers';
+import { convertDateToISOstring, cleanDb } from '../helpers';
 import app, { init } from '../../src/app';
 import { createPaymentType } from '../factories';
 

@@ -6,7 +6,7 @@
   "scripts": {
     "prepare": "husky install",
     "build": "tsc -p tsconfig.build.json",
-    "start": "npm run migration:prod && node ./dist/server.js",
+    "start": "npm run migration:prod && npx tsx ./dist/server.js",
     "dev": "cross-env NODE_ENV=development nodemon --watch 'src/' --exec 'npx tsx ./src/server.ts' -e ts",
     "test": "cross-env NODE_ENV=test jest --passWithNoTests --runInBand",
     "test:load-envs": "dotenv -e .env.test.local",
@@ -46,12 +46,12 @@
     "prettier": "^3.1.1",
     "prisma": "^5.7.0",
     "ts-jest": "^29.1.1",
-    "tsx": "^4.6.2",
     "typescript": "^5.3.3"
   },
   "dependencies": {
     "@faker-js/faker": "^8.3.1",
     "@prisma/client": "5.7.0",
+    "tsx": "^4.6.2",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "dotenv-cli": "^7.3.0",
